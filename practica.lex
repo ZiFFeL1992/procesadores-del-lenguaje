@@ -44,6 +44,16 @@ class dataClass {
         return elem_string;
     }
 
+    public String parseInteger( String elem ) {
+        if (elem.charAt(0) == '+') {
+            return "mas" + ", num(" + elem.substring(1) + ")";
+        } else if (elem.charAt(0) == '-') {
+            return "menos" + ", num(" + elem.substring(1) + ")";
+        } else {
+            return "num(" + elem + ")";
+        }
+    }
+
     public String printLog() {
         String output = "Análisis Léxico Completado\n\n[";
 
@@ -90,7 +100,7 @@ T_INTEGER=[+-]?[0-9]+
 {OPERADORES_RELACION}   { data.add("comp"); } /* Operador relacion */
 {SIGNOS_PUNTUACION}     { data.add(data.checkPuntuacion(yytext())); } /* Signos puntuacion */
 {IDENTIFICADOR}         { data.add("ide(" + yytext() + ")"); } /* Identificador */
-{T_INTEGER}             { data.add("num(" + yytext() + ")"); } /* Tipo entero */
+{T_INTEGER}             { data.add(data.parseInteger(yytext())); } /* Tipo entero */
 
 [\r\n]                  { /* Nada */}
 .                       { /* Nada */}
